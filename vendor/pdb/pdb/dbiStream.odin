@@ -1,7 +1,7 @@
 //! DBI Debug Info Stream reference: https://llvm.org/docs/PDB/DbiStream.html
 package pdb
 import "core:log"
-import "core:intrinsics"
+import "base:intrinsics"
 
 DbiStream_Index :MsfStreamIdx: 3
 
@@ -169,7 +169,7 @@ read_dbiFileInfos :: proc(this: ^BlocksReader, $T: typeid) -> (ret: T) where int
             ret.srcFileNames[i] = read_length_prefixed_name(this)
             nameMap[nameOffset] = ret.srcFileNames[i]
         }
-        
+
     }
     return
 }

@@ -1,7 +1,7 @@
 //! CodeView Type records, reference: https://llvm.org/docs/PDB/CodeViewTypes.html
 package pdb
 import "core:log"
-import "core:intrinsics"
+import "base:intrinsics"
 
 // |           Unused          | Mode |   Kind   |
 // |+32                        |+12   |+8        |+0
@@ -502,20 +502,20 @@ CvtStruct :: struct {
 CvtStruct_Prop :: enum u16le {
     None = 0,
     Packed = 1 << 0,
-    Ctor = 1 << 1, 
-    Ovlops = 1 << 2, 
+    Ctor = 1 << 1,
+    Ovlops = 1 << 2,
     IsNested = 1 << 3,
-    Cnested = 1 << 4, 
+    Cnested = 1 << 4,
     OpAssign = 1 << 5,
     OpCast = 1 << 6,
     FwdRef = 1 << 7,
     Scoped = 1 << 8,
-    HasUniqueueName = 1 << 9, 
+    HasUniqueueName = 1 << 9,
     Sealed = 1 << 10,
     HFA_Float = u16le(CvtStruct_HFA.Float) << 11,
     HFA_Double = u16le(CvtStruct_HFA.Double) << 11,
     HFA_Other = u16le(CvtStruct_HFA.Other) << 11,
-    Intrinsics = 1 << 13, 
+    Intrinsics = 1 << 13,
     Mocom_Ref = u16le(CvtStruct_MoCOM_UDT.Ref) << 14,
     Mocom_Value = u16le(CvtStruct_MoCOM_UDT.Value) << 14,
     Mocom_Interface = u16le(CvtStruct_MoCOM_UDT.Interface) << 14,

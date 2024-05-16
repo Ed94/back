@@ -1,7 +1,7 @@
 //! CodeView Symbol Records, reference: https://llvm.org/docs/PDB/CodeViewSymbols.html
 package pdb
 import "core:log"
-import "core:intrinsics"
+import "base:intrinsics"
 
 CvsOffset :: distinct u32le
 
@@ -169,7 +169,7 @@ CvsThunk32 :: struct {
 }
 CvsThunkOrdinal :: enum u8 {
     NoType,
-    Adjustor, 
+    Adjustor,
     VirtCall,
     PCode,
     Load,
@@ -231,7 +231,7 @@ CvsProc32 :: struct {
     name        : string,
 }
 // TODO: CV_PROCFLAGS
-CvsProcFlags :: distinct u8 
+CvsProcFlags :: distinct u8
 
 // S_REGREL32
 CvsRegRel32 :: struct {
@@ -630,9 +630,9 @@ CvsDefRangeRegisterRel :: struct {
 // offsetParent|pad|spilledUdtMember
 CvsDefRangeRegisterRelFlags :: distinct u16le
 
-read_with_trailing_rag :: #force_inline proc(this: ^BlocksReader, recLen: u16le, $T : typeid) -> (ret: T) 
+read_with_trailing_rag :: #force_inline proc(this: ^BlocksReader, recLen: u16le, $T : typeid) -> (ret: T)
     where intrinsics.type_has_field(T, "_base"),
-          intrinsics.type_has_field(T, "_rag"), 
+          intrinsics.type_has_field(T, "_rag"),
           intrinsics.type_field_index_of(T, "_rag") == 1,
           intrinsics.type_struct_field_count(T) == 2 {
     ret._base = read_packed(this, type_of(ret._base))

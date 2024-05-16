@@ -2,7 +2,7 @@
 package pdb
 import "core:log"
 import "core:slice"
-import "core:intrinsics"
+import "base:intrinsics"
 
 ModStreamHeader :: struct #packed {
     signature : ModStreamSignature, // expected to be .C13
@@ -97,7 +97,7 @@ parse_mod_stream :: proc(streamDir: ^StreamDirectory, modi: ^SlimDbiMod) -> (ret
             //log.debugf("[%v:%v] %v", modSr.offset, endOffset, ssh)
             defer modSr.offset = endOffset
             #partial switch ssh.subsectionType {
-            case .Lines: 
+            case .Lines:
                 cBlock := &ret.blocks[lineBlockCount]
                 lineBlockCount+=1
                 ssLines := read_packed(&modSr, CvDbgssLinesHeader)
@@ -266,13 +266,13 @@ CvDbgSubsectionHeader :: struct #packed {
 }
 CvDbgSubsectionType :: enum u32 { // DEBUG_S_SUBSECTION_TYPE
     // Native
-    Symbols = 0xf1, 
-    Lines, 
-    StringTable, 
-    FileChecksums, 
-    FrameData, 
-    InlineeLines, 
-    CrossScopeImports, 
+    Symbols = 0xf1,
+    Lines,
+    StringTable,
+    FileChecksums,
+    FrameData,
+    InlineeLines,
+    CrossScopeImports,
     CrossScopeExports,
     // .NET
     IlLines, // seems that this can be parsed by SsLinesHeader as well, need further investigation
