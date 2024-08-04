@@ -1,7 +1,9 @@
 //+private file
 package back
 
-import "core:strings"
+@require import "core:strings"
+
+when !USE_FALLBACK {
 
 foreign import system "system:System.framework"
 
@@ -18,12 +20,16 @@ _trace :: proc(buf: Trace) -> (n: int) {
 	ctx:    unw_context_t
 	cursor: unw_cursor_t
 
-	assert(unw_getcontext(&ctx) == 0)
-	assert(unw_init_local(&cursor, &ctx) == 0)
+	ret: i32
+	ret = unw_getcontext(&ctx)
+	assert(ret == 0)
+	ret = unw_init_local(&cursor, &ctx)
+	assert(ret == 0)
 
 	pc: uintptr
 	for ; unw_step(&cursor) > 0 && n < len(buf); n += 1 {
-		assert(unw_get_reg(&cursor, .IP, &pc) == 0)
+		ret = unw_get_reg(&cursor, .IP, &pc)
+		assert(ret == 0)
 		buf[n] = rawptr(pc)
 	}
 
@@ -137,4 +143,6 @@ foreign system {
 	unw_step       :: proc(cursor: ^unw_cursor_t) -> i32 ---
 
 	getpid :: proc() -> pid_t ---
+}
+
 }

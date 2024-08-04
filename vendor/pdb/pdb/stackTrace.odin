@@ -302,7 +302,7 @@ parse_stack_trace :: proc(stackTrace: []StackFrame, sameProcess: bool, srcCodeLo
                 if streamDir, sdOk := find_stream_dir(pdbr); sdOk {
                     mi.streamDir = streamDir
                     pdbSr := get_stream_reader(&mi.streamDir, PdbStream_Index)
-                    pdbHeader, nameMap, pdbFeatures := parse_pdb_stream(&pdbSr)
+                    _, nameMap, _ := parse_pdb_stream(&pdbSr)
                     mi.namesStream = get_stream_reader(&mi.streamDir, find_named_stream(nameMap, NamesStream_Name))
                     mi.dbiData = parse_dbi_stream(&mi.streamDir)
                     mi.ipiStream = get_stream_reader(&mi.streamDir, IpiStream_Index)

@@ -4,8 +4,9 @@ package back
 import "core:c/libc"
 import "core:fmt"
 import "core:os"
-import "core:runtime"
+import "base:runtime"
 
+@(private="package")
 _register_segfault_handler :: proc() {
 	libc.signal(libc.SIGSEGV, proc "c" (code: i32) {
 		context = runtime.default_context()
